@@ -2,7 +2,9 @@ from base64 import b64encode, b64decode
 
 mode = input("Mode? E for encrypt or D for decrypt\n")
 if mode == "E":
-    message = input("What is your message\n")
+    emode = input("C for custom text or T for text file\n")
+    if emode == "C":
+        message = input("What is your message\n")
 key = input("What is key\n")
 key = int(key)
 
@@ -26,7 +28,13 @@ def single_byte_xor(message, key, encrypt=True):
 
 
 if mode == "E":
-    print(single_byte_xor(message, key, encrypt=True))
+    if emode == "C":
+        print(single_byte_xor(message, key, encrypt=True))
+    elif emode == "T":
+        with open("etext.txt", "r") as f:
+            message = f.readline()
+            f.close()
+        print(single_byte_xor(message, key, encrypt=True))
 elif mode == "D":
     with open("cipher.txt", "r") as f:
         message = f.readline()
