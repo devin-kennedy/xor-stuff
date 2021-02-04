@@ -20,12 +20,10 @@ def single_byte_xor(message, key, encrypt=True):
 
     if encrypt:
         encoded = b64encode(ba)
-        return "B64 encoded: " + str(encoded)
+        return "B64 encoded: " + str(encoded) + " with key: " + str(key)
     else:
         decoded = ba.decode("ASCII")
-        return "B64 decoded: " + str(decoded)
-    
-
+        return "B64 decoded: " + str(decoded) + " with key: " + str(key)
 
 if mode == "E":
     if emode == "C":
@@ -34,7 +32,11 @@ if mode == "E":
         with open("etext.txt", "r") as f:
             message = f.readline()
             f.close()
-        print(single_byte_xor(message, key, encrypt=True))
+        encrypted = single_byte_xor(message, key, encrypt=True)
+        print(encrypted)
+        with open("encripted.txt", "w") as f:
+            f.write(encrypted)
+            f.close()
 elif mode == "D":
     with open("cipher.txt", "r") as f:
         message = f.readline()
