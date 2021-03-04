@@ -103,7 +103,7 @@ def score(bfdict, penalites):
   return results
 
 def sort(results):
-  return sorted(results, key=results.get, reverse=True)
+  return sorted(results, key=results.get, reverse=False)
 
 def main():
     mode = input("Mode? E for encrypt or D for decrypt\n")
@@ -132,7 +132,7 @@ def main():
                 f.write(encrypted)
                 f.close()
     elif mode == "D":
-        with open("encripted.txt", "r") as f:
+        with open("cipher.txt", "r") as f:
             message = f.readline()
             f.close()
         if dmode == "K":
@@ -149,7 +149,9 @@ def main():
             print("Completed with key " + str(k))
             print(score(dictionary, penalites))
             results = score(dictionary, penalites)
-            print(sort(results))
+            results = sort(results)
+            print(results)
+            print(results[0])
     else:
         print("Invalid mode entered")
 
