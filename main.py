@@ -51,7 +51,7 @@ penalites = {
   "x":"5",
   "X":"5",
   "q":"6",
-  "Q":"6",
+  "Q":"7",
   "z":"6",
   "Z":"6",
   "1":"6",
@@ -66,9 +66,11 @@ penalites = {
   "0":"6",
   " ":"1",
   ".":"3",
+  ",":"3",
   "!":"4",
   "(":"5",
   ")":"5",
+  "-":"10",
   "&":"10",
 }
 
@@ -91,7 +93,7 @@ def single_byte_xor(message, key, encrypt=True):
 
 def score(bfdict, penalites):
   results = {}
-  for value in bfdict.values():
+  for key, value in bfdict.items():
     score = 0
     for i in value:
       if i[0] in penalites.keys():
@@ -99,11 +101,11 @@ def score(bfdict, penalites):
         score += penalty
       else:
         score += 10000
-    results[value] = str(score)
+    results[key] = score
   return results
 
 def sort(results):
-  return sorted(results, key=results.get, reverse=False)
+  return sorted(results.items(), key=lambda x: int(x[1]), reverse=False)
 
 def main():
     mode = input("Mode? E for encrypt or D for decrypt\n")
@@ -146,12 +148,17 @@ def main():
                     print("Added to dict. Key: " + str(k))
                 except:
                     print("Error with key " + str(k))
-            print("Completed with key " + str(k))
-            print(score(dictionary, penalites))
+            print("Completed")
             results = score(dictionary, penalites)
-            results = sort(results)
-            print(results)
-            print(results[0])
+            sortedResults = sort(results)
+            for i in range(20):
+                result = sortedResults[i]
+                key = result[0]
+                scored = result[1]
+                print("Key: " + str(key) + " Score: " + str(scored))
+                value = dictionary[key]
+                print(value)
+                print("\n")
     else:
         print("Invalid mode entered")
 
