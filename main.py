@@ -70,9 +70,11 @@ penalites = {
   "!":"4",
   "(":"5",
   ")":"5",
-  "-":"10",
-  "&":"10",
+  "-":"20",
+  "&":"20",
   "?":"9",
+  '"':"15",
+  "'":"15",
 }
 
 def single_byte_xor(message, key, encrypt=True):
@@ -101,7 +103,7 @@ def score(bfdict, penalites):
         penalty = int(penalites.get(i[0]))
         score += penalty
       else:
-        score += 10000
+        score += 100000
     results[key] = score
   return results
 
@@ -159,9 +161,6 @@ def main():
                 value = dictionary[key]
                 print(value)
                 print("\n")
-            largest = sortedResults[-1]
-            largestscore = largest[1]
-            print("Largest score: " + str(largestscore))
     else:
         print("Invalid mode entered")
 
