@@ -72,6 +72,7 @@ penalites = {
   ")":"5",
   "-":"10",
   "&":"10",
+  "?":"9",
 }
 
 def single_byte_xor(message, key, encrypt=True):
@@ -134,7 +135,7 @@ def main():
                 f.write(encrypted)
                 f.close()
     elif mode == "D":
-        with open("cipher.txt", "r") as f:
+        with open("encripted.txt", "r") as f:
             message = f.readline()
             f.close()
         if dmode == "K":
@@ -145,22 +146,25 @@ def main():
                 try:
                     decrypted = single_byte_xor(message, k, encrypt=False)
                     dictionary[k] = decrypted
-                    print("Added to dict. Key: " + str(k))
                 except:
-                    print("Error with key " + str(k))
+                    pass
             print("Completed")
             results = score(dictionary, penalites)
             sortedResults = sort(results)
-            for i in range(20):
+            for i in range(5):
                 result = sortedResults[i]
                 key = result[0]
                 scored = result[1]
-                print("Key: " + str(key) + " Score: " + str(scored))
+                print("(" + str(i) + ")" + " Key: " + str(key) + " Score: " + str(scored))
                 value = dictionary[key]
                 print(value)
                 print("\n")
+            largest = sortedResults[-1]
+            largestscore = largest[1]
+            print("Largest score: " + str(largestscore))
     else:
         print("Invalid mode entered")
 
 if __name__ =="__main__":
-    main()
+    while True:
+        main()
